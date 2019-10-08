@@ -10,6 +10,7 @@ using Storage.Models;
 
 namespace Storage.Controllers
 {
+    [Authorize]
     public class ProfilesController : Controller
     {
         private StorageContext db = new StorageContext();

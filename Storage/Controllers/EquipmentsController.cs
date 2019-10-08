@@ -10,6 +10,7 @@ using Storage.Models;
 
 namespace Storage.Controllers
 {
+    [Authorize]
     public class EquipmentsController : Controller
     {
         private StorageContext db = new StorageContext();
@@ -46,7 +47,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Key,Name")] Equipment equipment)
+        public ActionResult Create([Bind(Include = "Id,Categories,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +79,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Key,Name")] Equipment equipment)
+        public ActionResult Edit([Bind(Include = "Id,Categories,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
