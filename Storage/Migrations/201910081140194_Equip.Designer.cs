@@ -13,7 +13,7 @@ namespace Storage.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201910071237360_Equip"; }
+            get { return "201910081140194_Equip"; }
         }
         
         string IMigrationMetadata.Source
