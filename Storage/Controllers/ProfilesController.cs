@@ -10,7 +10,6 @@ using Storage.Models;
 
 namespace Storage.Controllers
 {
-    [Authorize]
     public class ProfilesController : Controller
     {
         private StorageContext db = new StorageContext();
@@ -47,7 +46,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Profile profile)
+        public ActionResult Create([Bind(Include = "Id,Name,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Profile profile)
+        public ActionResult Edit([Bind(Include = "Id,Name,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
         {
             if (ModelState.IsValid)
             {
