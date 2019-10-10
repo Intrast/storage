@@ -26,6 +26,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Notes)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfileId)
+        </th>
         <th></th>
     </tr>
 
@@ -46,10 +49,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Notes)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.Profile.Name)
+        </th>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
         </td>
     </tr>
 }

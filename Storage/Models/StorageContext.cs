@@ -10,5 +10,6 @@ namespace Storage.Models
     {
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<Audit> Audits { get; set; }
     }
 }

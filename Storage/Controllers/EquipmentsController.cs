@@ -18,7 +18,8 @@ namespace Storage.Controllers
         // GET: Equipments
         public ActionResult Index()
         {
-            return View(db.Equipments.ToList());
+            var equipments = db.Equipments.Include(e => e.Profile);
+            return View(equipments.ToList());
         }
 
         // GET: Equipments/Details/5

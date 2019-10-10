@@ -53,13 +53,26 @@
             }
             else
             {
-            @Html.DisplayFor(model => model.DateEndWork)
+                @Html.DisplayFor(model => model.DateEndWork)
             }
         </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <dt>
+            @Html.DisplayNameFor(model => model.Equipments)
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var equipments in Model.Equipments)
+                {
+                    <li>@equipments.Categories @equipments.Name @equipments.Key</li>
+                }
+            </ul>
+        </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

@@ -27,7 +27,7 @@ namespace Storage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profiles.Find(id);
+            Profile profile = db.Profiles.Include(p=>p.Equipments).FirstOrDefault(p=>p.Id==id); 
             if (profile == null)
             {
                 return HttpNotFound();

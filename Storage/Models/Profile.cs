@@ -16,5 +16,11 @@ namespace Storage.Models
         public DateTime DateStartWork { get; set; }
         [DataType(DataType.Date)]
         public DateTime? DateEndWork { get; set; }
+
+        public ICollection<Equipment> Equipments { get; set; }
+        public Profile()
+        {
+            Equipments = new List<Equipment>();
+        }
     }
 }

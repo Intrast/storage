@@ -16,5 +16,8 @@ namespace Storage.Models
         public DateTime DateOfPurchase { get; set; }
         public string Notes { get; set; }
 
+        public int? ProfileId { get; set; }
+        public Profile Profile { get; set; }
+
     }
 }
