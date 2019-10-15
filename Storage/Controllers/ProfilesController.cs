@@ -123,5 +123,24 @@ namespace Storage.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpGet]
+        public ActionResult AddEquipmentsToProfile()
+        {
+            SelectList profiles = new SelectList(db.Profiles, "Id", "Name");
+            SelectList equipments = new SelectList(db.Equipments, "Id", "Name");
+            ViewBag.Profiles = profiles;
+            ViewBag.Equipments = equipments;
+
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddEquipmentsToProfile(Equipment ProfileAndEquipmentId)
+        {
+            Equipment equipment = db.Equipments.Find(ProfileAndEquipmentId.Id);
+            equipment.ProfileId = ProfileAndEquipmentId.ProfileId;
+            db.Entry(equipment).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
