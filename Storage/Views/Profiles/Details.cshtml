@@ -19,11 +19,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Group)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Group)
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupId)
         </dd>
 
         <dt>
@@ -65,12 +73,12 @@
             <ul>
                 @foreach (var equipments in Model.Equipments)
                 {
-                    <li>@equipments.Categories @equipments.Name @equipments.Key</li>
+                    <li>@equipments.CategoriesId @equipments.Name @equipments.Key</li>
                 }
             </ul>
         </dd>
 
-        </dl>
+    </dl>
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

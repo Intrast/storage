@@ -13,7 +13,7 @@ namespace Storage.Controllers
     public class ProfilesController : Controller
     {
         private StorageContext db = new StorageContext();
-
+        
         // GET: Profiles
         public ActionResult Index()
         {
@@ -38,6 +38,8 @@ namespace Storage.Controllers
         // GET: Profiles/Create
         public ActionResult Create()
         {
+            SelectList groups = new SelectList(db.ProfileGroups, "Id", "Group");
+            ViewBag.Groups = groups;
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
+        public ActionResult Create([Bind(Include = "Id,Name,Email,ProfileGroup,Tehnology,DateStartWork,DateEndWork")] Profile profile)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +72,8 @@ namespace Storage.Controllers
             {
                 return HttpNotFound();
             }
+            SelectList groups = new SelectList(db.ProfileGroups, "Id", "Group", profile.GroupId);
+            ViewBag.Groups = groups;
             return View(profile);
         }
 
@@ -78,7 +82,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
         {
             if (ModelState.IsValid)
             {

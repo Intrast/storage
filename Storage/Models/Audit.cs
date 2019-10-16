@@ -9,9 +9,11 @@ namespace Storage.Models
     public class Audit
     {
         public int Id { get; set; }
-        public string ProfileId { get; set; }
-        public string EquipmentId { get; set; }
-        public string Status { get; set; }
+        public int EquipmentId { get; set; }
+        public int NewProfileId { get; set; }
+        public int OldProfileId { get; set; }
+        public AuditStatus NewStatus { get; set; }
+        public AuditStatus OldStatus { get; set; }
         public DateTime Time { get; set; }
     }
 }

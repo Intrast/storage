@@ -10,17 +10,18 @@ namespace Storage.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Group { get; set; }
+        public string Email { get; set; }
         public string Tehnology { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateStartWork { get; set; }
         [DataType(DataType.Date)]
         public DateTime? DateEndWork { get; set; }
 
+        public int GroupId { get; set; }
+        public ProfileGroup ProfileGroup { get; set; }
+
         public ICollection<Equipment> Equipments { get; set; }
-        public Profile()
-        {
-            Equipments = new List<Equipment>();
-        }
+
+
     }
 }

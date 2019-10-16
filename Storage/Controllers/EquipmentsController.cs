@@ -18,7 +18,7 @@ namespace Storage.Controllers
         // GET: Equipments
         public ActionResult Index()
         {
-            var equipments = db.Equipments.Include(e => e.Profile);
+            var equipments = db.Equipments.Include(e => e.Profile).Include(e => e.EquipmentCategorie);
             return View(equipments.ToList());
         }
 
@@ -40,6 +40,8 @@ namespace Storage.Controllers
         // GET: Equipments/Create
         public ActionResult Create()
         {
+            SelectList categories = new SelectList(db.EquipmentCategories, "Id", "Categorie");
+            ViewBag.Categories = categories;
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Categories,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
+        public ActionResult Create([Bind(Include = "Id,CategoriesId,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +74,8 @@ namespace Storage.Controllers
             {
                 return HttpNotFound();
             }
+            SelectList categories = new SelectList(db.EquipmentCategories, "Id", "Categorie", equipment.CategoriesId);
+            ViewBag.Categories = categories;
             return View(equipment);
         }
 
@@ -80,7 +84,7 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Categories,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
+        public ActionResult Edit([Bind(Include = "Id,CategoriesId,Name,Key,DateOfPurchase,Notes")] Equipment equipment)
         {
             if (ModelState.IsValid)
             {
