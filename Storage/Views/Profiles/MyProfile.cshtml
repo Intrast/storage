@@ -1,0 +1,149 @@
+﻿@model Storage.Models.Profile
+@using Microsoft.AspNet.Identity;
+@{
+    /**/
+
+    ViewBag.Title = "MyProfile";
+}
+
+<h2>MyProfile</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Group.Group)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tehnology)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tehnology)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateStartWork)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateStartWork)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEndWork)
+        </dt>
+
+        <dd>
+            @if (Model.DateEndWork == null)
+            {
+                @: -
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.DateEndWork)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Equipments)
+        </dt>
+
+        <dd>
+            @foreach (var equipment in Model.Equipments)
+            {
+                <ul>
+                    <li>
+                        @equipment.CategorieId @equipment.Name @equipment.Key
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <input id="@equipment.Id" type="button" value="X" class="remove">
+                        }
+                        else
+                        {
+                            <input id="@equipment.Id" type="button" value="Видалити" class="delete-request">
+                        }
+                    </li>
+                </ul>
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (Model.UserId == User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    }
+</p>
+
+
+@section scripts{
+
+    <script>
+        $('.delete-request').click(function () {
+
+            var thisElement = $(this);
+            var equipments = {
+                'EquipmentId': thisElement.attr("id"),
+                'UserId': "@Model.UserId"
+            };
+            $.ajax({
+                url: "@(Url.Action("DeleteRequest", "Orders"))",
+                type: "Post",
+                data: JSON.stringify(equipments),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+        });
+
+        $('.remove').click(function () {
+
+            var thisElement = $(this);
+            var equipments = {
+                'EquipmentId': thisElement.attr("id"),
+                'UserId': "@Model.UserId"
+            };
+            $.ajax({
+                url: "@(Url.Action("RemoveFromProfile", "EquipmentManage"))",
+                type: "Post",
+                data: JSON.stringify(equipments),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+        });
+
+        function successFunc(data, status) {
+            alert(data);
+        }
+
+        function errorFunc(errorData) {
+            alert('Ошибка' + errorData.responseText);
+        }
+
+    </script>
+}

@@ -1,4 +1,4 @@
-﻿@model Storage.Models.Equipment
+﻿@model Storage.ViewModels.EditEquipmentViewModels
 
 @{
     ViewBag.Title = "Edit";
@@ -16,11 +16,12 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
+        @Html.HiddenFor(model => model.ProfileId)
+        @Html.HiddenFor(model => model.Deleted)
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoriesId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CategorieId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(x => x.CategoriesId, ViewBag.Categories as SelectList)
+                @Html.DropDownListFor(x => x.CategorieId, ViewBag.Categories as SelectList)
             </div>
         </div>
 

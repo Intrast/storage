@@ -1,4 +1,4 @@
-﻿@model Storage.Models.Equipment
+﻿@model Storage.ViewModels.CreateEquipmentViewModels
 
 @{
     ViewBag.Title = "Create";
@@ -6,19 +6,19 @@
 
 <h2>Create</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Equipment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoriesId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CategorieId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-              @Html.DropDownListFor(x => x.CategoriesId, ViewBag.Categories as SelectList)
+                @Html.DropDownListFor(x => x.CategorieId, ViewBag.Categories as SelectList)
             </div>
         </div>
 
@@ -54,6 +54,19 @@
             </div>
         </div>
 
+        <div class="form-group add-profile">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="button" class="add-profile" value="Add Profie">
+            </div>
+        </div>
+
+        <div class="form-group hidden select-profile" >
+            @Html.LabelFor(model => model.ProfileId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.ProfileId, ViewBag.Profiles as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -66,6 +79,12 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts{
+    <script>
+        $(".add-profile").click(function () {
+            $(".add-profile").addClass("hidden");
+            $(".select-profile").removeClass("hidden");
+        });   
+
+    </script>
 }

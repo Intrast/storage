@@ -1,0 +1,48 @@
+﻿@model Storage.Models.Equipment
+@{
+                /**/
+
+                ViewBag.Title = "AddEquipmentsToProfile";
+}
+<h2>AddEquipmentsToProfile</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                @Html.DropDownListFor(x => x.ProfileId, ViewBag.Profiles as SelectList, new { @class = "form-control" })
+            </div>
+        </div>
+
+        
+        @*<div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                @Html.DropDownListFor(x => x.CategorieId, ViewBag.Categories as SelectList, new { @class = "form-control" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                @Html.ListBoxFor(x => x.EquipmentsIdArray, ViewBag.Equipments as MultiSelectList, new { id = "equipments", multiple = "multiple", @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Add" class="btn btn-sm" />
+            </div>
+        </div>
+
+    </div>
+ }
+ @section scripts{
+    <script>
+        $(function () {
+            $("#equipments").chosen();
+        });
+    </script>
+}

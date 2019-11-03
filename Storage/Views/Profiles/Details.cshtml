@@ -1,4 +1,5 @@
 ﻿@model Storage.Models.Profile
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
@@ -31,7 +32,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.GroupId)
+            @Html.DisplayFor(model => model.Group.Group)
         </dd>
 
         <dt>
@@ -69,18 +70,62 @@
             @Html.DisplayNameFor(model => model.Equipments)
         </dt>
 
-        <dd>
-            <ul>
-                @foreach (var equipments in Model.Equipments)
-                {
-                    <li>@equipments.CategoriesId @equipments.Name @equipments.Key</li>
-                }
-            </ul>
+        <dd class="equipments">
+            @foreach (var equipment in Model.Equipments)
+            {
+                <ul class="equipment-@equipment.Id">
+                    <li>
+                        @equipment.CategorieId @equipment.Name @equipment.Key
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <input id="@equipment.Id" type="button" value="X" class="remove">
+                        }
+                    </li>
+                </ul>
+            }
         </dd>
 
     </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+</div>
+<p>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+@section scripts{
+
+    <script>
+        $('.remove').click(function () {
+
+            var thisElement = $(this);
+            var equipments = {
+                'EquipmentId': thisElement.attr("id"),
+                'UserId': "@Model.UserId"
+            };
+            $.ajax({
+                url: "@(Url.Action("RemoveFromProfile", "EquipmentManage"))",
+                type: "Post",
+                data: JSON.stringify(equipments),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: successFunc,
+                error: errorFunc
+            });
+        });
+
+
+        function successFunc(data, status) {
+            $('.equipment-'+ data).remove();
+            alert("Предмет повернено на склад");
+        }
+
+        function errorFunc(errorData) {
+            alert('Ошибка' + errorData.responseText);
+        }
+
+    </script>
+}

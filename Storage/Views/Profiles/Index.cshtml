@@ -1,60 +1,77 @@
-﻿@model IEnumerable<Storage.Models.Profile>
-
+﻿@model PagedList.IPagedList<Storage.Models.Profile>
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Register", "Account")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProfileGroup)
+            GroupId
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tehnology)
+            Tehnology
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateStartWork)
+            DateStartWork
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateEndWork)
+            DateEndWork
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Details", new { id = item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProfileGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tehnology)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateStartWork)
-        </td>
-        <td>
-            @if (item.DateEndWork == null )  {
-                @:-
-            } else
-                {@Html.DisplayFor(modelItem => item.DateEndWork)}
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-           
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        if (item.UserId != User.Identity.GetUserId())
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Group)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tehnology)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateStartWork)
+                </td>
+                <td>
+                    @if (item.DateEndWork == null)
+                    {
+                        @:-
+                    }
+                    else
+                    {@Html.DisplayFor(modelItem => item.DateEndWork)}
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                }
+            </tr>
+        }
+    }
 
 </table>
+
+<br />
+Сторінка @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

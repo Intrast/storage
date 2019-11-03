@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/Chosen/chosen.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -16,15 +18,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Storage", "MyProfile", "Profiles", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Profiles", "Index", "Profiles")</li>
-                    <li>@Html.ActionLink("Equipments", "Index", "Equipments")</li>
-                    <li>@Html.ActionLink("Add", "AddEquipmentsToProfile", "Profiles")</li>
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Profiles", "Index", "Profiles")</li>
+                        <li>@Html.ActionLink("Equipments", "Index", "Equipments")</li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Add", "AddEquipmentsToProfile", "EquipmentManage")</li>
+                        }
+                        <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                    </ul>
+                }
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -39,6 +49,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/chosen.jquery.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+
 namespace Storage.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -18,10 +19,19 @@ namespace Storage.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> 
     {
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ProfileGroup> ProfileGroups { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<EquipmentCategorie> EquipmentCategories { get; set; }
+        public DbSet<Audit> Audits { get; set; }
+        public DbSet<AuditStatus> AuditStatuses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+
         public ApplicationDbContext()
-            : base("StorageContext", throwIfV1Schema: false)
+            : base("ApplicationDbContext", throwIfV1Schema: false)
         {
         }
 

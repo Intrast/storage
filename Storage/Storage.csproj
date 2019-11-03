@@ -45,7 +45,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,55 +185,79 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EquipmentManageController.cs" />
     <Compile Include="Controllers\EquipmentsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProfilesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910071123075_init.cs" />
-    <Compile Include="Migrations\201910071123075_init.Designer.cs">
-      <DependentUpon>201910071123075_init.cs</DependentUpon>
+    <Compile Include="Migrations\201910240818206_newcontext.cs" />
+    <Compile Include="Migrations\201910240818206_newcontext.Designer.cs">
+      <DependentUpon>201910240818206_newcontext.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910071212421_prof.cs" />
-    <Compile Include="Migrations\201910071212421_prof.Designer.cs">
-      <DependentUpon>201910071212421_prof.cs</DependentUpon>
+    <Compile Include="Migrations\201910241952221_a.cs" />
+    <Compile Include="Migrations\201910241952221_a.Designer.cs">
+      <DependentUpon>201910241952221_a.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910081140194_Equip.cs" />
-    <Compile Include="Migrations\201910081140194_Equip.Designer.cs">
-      <DependentUpon>201910081140194_Equip.cs</DependentUpon>
+    <Compile Include="Migrations\201910242144044_b.cs" />
+    <Compile Include="Migrations\201910242144044_b.Designer.cs">
+      <DependentUpon>201910242144044_b.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910091141561_Profile.cs" />
-    <Compile Include="Migrations\201910091141561_Profile.Designer.cs">
-      <DependentUpon>201910091141561_Profile.cs</DependentUpon>
+    <Compile Include="Migrations\201910251013056_order.cs" />
+    <Compile Include="Migrations\201910251013056_order.Designer.cs">
+      <DependentUpon>201910251013056_order.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910100808592_Audit.cs" />
-    <Compile Include="Migrations\201910100808592_Audit.Designer.cs">
-      <DependentUpon>201910100808592_Audit.cs</DependentUpon>
+    <Compile Include="Migrations\201910280853254_a1.cs" />
+    <Compile Include="Migrations\201910280853254_a1.Designer.cs">
+      <DependentUpon>201910280853254_a1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910100959154_OneToMany.cs" />
-    <Compile Include="Migrations\201910100959154_OneToMany.Designer.cs">
-      <DependentUpon>201910100959154_OneToMany.cs</DependentUpon>
+    <Compile Include="Migrations\201910291010348_c.cs" />
+    <Compile Include="Migrations\201910291010348_c.Designer.cs">
+      <DependentUpon>201910291010348_c.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910160842218_NewProfile.cs" />
-    <Compile Include="Migrations\201910160842218_NewProfile.Designer.cs">
-      <DependentUpon>201910160842218_NewProfile.cs</DependentUpon>
+    <Compile Include="Migrations\201910301017528_k.cs" />
+    <Compile Include="Migrations\201910301017528_k.Designer.cs">
+      <DependentUpon>201910301017528_k.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910161143474_EditModel.cs" />
-    <Compile Include="Migrations\201910161143474_EditModel.Designer.cs">
-      <DependentUpon>201910161143474_EditModel.cs</DependentUpon>
+    <Compile Include="Migrations\201910301023298_l.cs" />
+    <Compile Include="Migrations\201910301023298_l.Designer.cs">
+      <DependentUpon>201910301023298_l.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301037175_sd.cs" />
+    <Compile Include="Migrations\201910301037175_sd.Designer.cs">
+      <DependentUpon>201910301037175_sd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301121418_bla.cs" />
+    <Compile Include="Migrations\201910301121418_bla.Designer.cs">
+      <DependentUpon>201910301121418_bla.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910302202164_adf.cs" />
+    <Compile Include="Migrations\201910302202164_adf.Designer.cs">
+      <DependentUpon>201910302202164_adf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910312256195_u.cs" />
+    <Compile Include="Migrations\201910312256195_u.Designer.cs">
+      <DependentUpon>201910312256195_u.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910312312245_g.cs" />
+    <Compile Include="Migrations\201910312312245_g.Designer.cs">
+      <DependentUpon>201910312312245_g.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Audit.cs" />
     <Compile Include="Models\AuditStatus.cs" />
     <Compile Include="Models\Equipment.cs" />
     <Compile Include="Models\EquipmentCategorie.cs" />
+    <Compile Include="ViewModels\EquipmentViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="ViewModels\OrderViewModels.cs" />
     <Compile Include="Models\Profile.cs" />
     <Compile Include="Models\ProfileGroup.cs" />
-    <Compile Include="Models\StorageContext.cs" />
+    <Compile Include="ViewModels\ProfileViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -233,6 +266,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Chosen\chosen-sprite.png" />
+    <Content Include="Content\Chosen\chosen.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -240,6 +278,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -250,6 +289,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\select2.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -263,9 +303,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -286,21 +323,27 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Equipments\Create.cshtml" />
     <Content Include="Views\Equipments\Delete.cshtml" />
     <Content Include="Views\Equipments\Details.cshtml" />
     <Content Include="Views\Equipments\Edit.cshtml" />
     <Content Include="Views\Equipments\Index.cshtml" />
-    <Content Include="Views\Profiles\Create.cshtml" />
     <Content Include="Views\Profiles\Delete.cshtml" />
     <Content Include="Views\Profiles\Details.cshtml" />
     <Content Include="Views\Profiles\Edit.cshtml" />
     <Content Include="Views\Profiles\Index.cshtml" />
-    <Content Include="Views\Profiles\AddEquipmentsToProfile.cshtml" />
+    <Content Include="Views\EquipmentManage\AddEquipmentsToProfile.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\Request.cshtml" />
+    <Content Include="Views\Profiles\MyProfile.cshtml" />
+    <Content Include="Views\Equipments\Create.cshtml" />
+    <Content Include="Views\Equipments\DeletedEquipments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\EquipmentManage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -316,29 +359,44 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910071123075_init.resx">
-      <DependentUpon>201910071123075_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910240818206_newcontext.resx">
+      <DependentUpon>201910240818206_newcontext.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910071212421_prof.resx">
-      <DependentUpon>201910071212421_prof.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910241952221_a.resx">
+      <DependentUpon>201910241952221_a.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910081140194_Equip.resx">
-      <DependentUpon>201910081140194_Equip.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910242144044_b.resx">
+      <DependentUpon>201910242144044_b.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910091141561_Profile.resx">
-      <DependentUpon>201910091141561_Profile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910251013056_order.resx">
+      <DependentUpon>201910251013056_order.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910100808592_Audit.resx">
-      <DependentUpon>201910100808592_Audit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910280853254_a1.resx">
+      <DependentUpon>201910280853254_a1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910100959154_OneToMany.resx">
-      <DependentUpon>201910100959154_OneToMany.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910291010348_c.resx">
+      <DependentUpon>201910291010348_c.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910160842218_NewProfile.resx">
-      <DependentUpon>201910160842218_NewProfile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910301017528_k.resx">
+      <DependentUpon>201910301017528_k.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910161143474_EditModel.resx">
-      <DependentUpon>201910161143474_EditModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910301023298_l.resx">
+      <DependentUpon>201910301023298_l.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301037175_sd.resx">
+      <DependentUpon>201910301037175_sd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301121418_bla.resx">
+      <DependentUpon>201910301121418_bla.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910302202164_adf.resx">
+      <DependentUpon>201910302202164_adf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910312256195_u.resx">
+      <DependentUpon>201910312256195_u.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910312312245_g.resx">
+      <DependentUpon>201910312312245_g.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,13 +14,14 @@ namespace Storage.Models
         [DataType(DataType.Date)]
         public DateTime DateOfPurchase { get; set; }
         public string Notes { get; set; }
+        public bool Deleted { get; set; }
 
         public int? ProfileId { get; set; }
         public Profile Profile { get; set; }
 
-        public int CategoriesId { get; set; }
-        public EquipmentCategorie EquipmentCategorie { get; set; }
+        public int CategorieId { get; set; }
+        public EquipmentCategorie Categorie { get; set; }
 
-
+        public int[] EquipmentsIdArray { get; set; }
     }
 }

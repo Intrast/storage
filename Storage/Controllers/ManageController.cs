@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Storage.Models;
+using Storage.ViewModels;
 
 namespace Storage.Controllers
 {

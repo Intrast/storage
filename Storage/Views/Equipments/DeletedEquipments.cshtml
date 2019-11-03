@@ -1,0 +1,68 @@
+﻿@model PagedList.IPagedList<Storage.Models.Equipment>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "DeletedEquipments";
+}
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Equipments", "Index") @:|
+    @Html.ActionLink("Deleted Equipments", "Deletequipments")
+}
+<h2>Index</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            CategorieId
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Key
+        </th>
+        <th>
+            DateOfPurchase
+        </th>
+        <th>
+            Notes
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if ((item.ProfileId == null) || (User.IsInRole("Admin")))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categorie.Categorie)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfPurchase)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+<br />
+Сторінка @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("DeletedEquipments", new { page }))

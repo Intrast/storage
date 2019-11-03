@@ -6,18 +6,35 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using PagedList;
+using PagedList.Mvc;
 using Storage.Models;
+using Storage.ViewModels;
 
 namespace Storage.Controllers
 {
+    [Authorize]
     public class ProfilesController : Controller
     {
-        private StorageContext db = new StorageContext();
-        
+        private ApplicationDbContext db = new ApplicationDbContext();
+       
         // GET: Profiles
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.Profiles.ToList());
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            var profiles = db.Profiles.Include(x => x.Group).OrderByDescending(x => x.Name);
+            return View(profiles.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult MyProfile()
+        {
+            var a = User.Identity.GetUserId();
+            Models.Profile profile = db.Profiles.Include(x => x.Group).Include(x => x.Equipments).FirstOrDefault(x => x.UserId == a);
+            return View(profile);
         }
 
         // GET: Profiles/Details/5
@@ -27,39 +44,14 @@ namespace Storage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profiles.Include(p=>p.Equipments).FirstOrDefault(p=>p.Id==id); 
+            Models.Profile profile = db.Profiles.Include(x => x.Group).Include(p => p.Equipments).FirstOrDefault(p=>p.Id==id);
+
             if (profile == null)
             {
                 return HttpNotFound();
             }
             return View(profile);
         }
-
-        // GET: Profiles/Create
-        public ActionResult Create()
-        {
-            SelectList groups = new SelectList(db.ProfileGroups, "Id", "Group");
-            ViewBag.Groups = groups;
-            return View();
-        }
-
-        // POST: Profiles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Email,ProfileGroup,Tehnology,DateStartWork,DateEndWork")] Profile profile)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Profiles.Add(profile);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(profile);
-        }
-
         // GET: Profiles/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -67,14 +59,24 @@ namespace Storage.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profiles.Find(id);
+
+            Models.Profile profile = db.Profiles.Find(id);
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Models.Profile, EditProfileViewModels>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+            EditProfileViewModels model = new EditProfileViewModels();
+            model = mapper.Map<Models.Profile, EditProfileViewModels>(profile);
+
             if (profile == null)
             {
                 return HttpNotFound();
             }
-            SelectList groups = new SelectList(db.ProfileGroups, "Id", "Group", profile.GroupId);
+
+            SelectList groups = new SelectList(db.ProfileGroups, "Id", "Group", model.GroupId);
             ViewBag.Groups = groups;
-            return View(profile);
+            return View(model);
         }
 
         // POST: Profiles/Edit/5
@@ -82,25 +84,42 @@ namespace Storage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,Group,Tehnology,DateStartWork,DateEndWork")] Profile profile)
+        public ActionResult Edit(EditProfileViewModels model)
         {
             if (ModelState.IsValid)
             {
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<EditProfileViewModels, Models.Profile>();
+                });
+
+                IMapper mapper = config.CreateMapper();
+                Models.Profile profile = new Models.Profile();
+                profile = mapper.Map<EditProfileViewModels, Models.Profile>(model);
+                
                 db.Entry(profile).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (User.IsInRole("Admin") &&  model.UserId != User.Identity.GetUserId())
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("MyProfile");
+                }
             }
-            return View(profile);
+            return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Profiles/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Profile profile = db.Profiles.Find(id);
+            Models.Profile profile = db.Profiles.Find(id);
             if (profile == null)
             {
                 return HttpNotFound();
@@ -109,11 +128,12 @@ namespace Storage.Controllers
         }
 
         // POST: Profiles/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Profile profile = db.Profiles.Find(id);
+            Models.Profile profile = db.Profiles.Find(id);
             db.Profiles.Remove(profile);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -126,25 +146,6 @@ namespace Storage.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        [HttpGet]
-        public ActionResult AddEquipmentsToProfile()
-        {
-            SelectList profiles = new SelectList(db.Profiles, "Id", "Name");
-            SelectList equipments = new SelectList(db.Equipments, "Id", "Name");
-            ViewBag.Profiles = profiles;
-            ViewBag.Equipments = equipments;
-
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AddEquipmentsToProfile(Equipment ProfileAndEquipmentId)
-        {
-            Equipment equipment = db.Equipments.Find(ProfileAndEquipmentId.Id);
-            equipment.ProfileId = ProfileAndEquipmentId.ProfileId;
-            db.Entry(equipment).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
     }
 }
